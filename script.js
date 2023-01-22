@@ -28,9 +28,18 @@ function buildWeatherURLforCity(cityName, type = 'current') {
     return buildURL(BASE_URL, forecastType, params);
 }
 
-let getWeatherDataForCity = async function(cityName, type) {
+async function getWeatherDataForCity(cityName, type) {
     let url = buildWeatherURLforCity(cityName, type);
-    let response = await fetch(url);
-    let data = await response.json();
-    return data;
+    try {
+        const response = await fetch(url);
+        if (response.ok) {
+            return await response.json();
+        } else {
+            throw new Error(`Unexpected status code: ${
+                response.status
+            } ${response.statusText}`);
+        }
+    } catch (error) {
+        console.error(error.message);
+    }
 };
