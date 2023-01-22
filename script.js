@@ -33,6 +33,10 @@ async function getWeatherDataForCity(cityName, type) {
     try {
         const response = await fetch(url);
         if (response.ok) {
+            // Without `await`, response.json() will not 
+            // throw if it fails. (The error would have
+            // to be caught with a .catch() handler by the 
+            // calling function.)
             return await response.json();
         } else {
             throw new Error(`Unexpected status code: ${

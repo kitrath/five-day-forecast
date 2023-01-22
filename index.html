@@ -18,35 +18,125 @@
     -->
     
     <header class="container">
-        <div class="row">
+        <div class="row text-center mb-4">
             <h1>Weather Dashboard</h1>
         </div>
     </header>
     <main class="container">
-        <div class="row">
+        <div class="row align-items-center mb-3">
             <div class="col-md-4" id="search">
-                <!-- search form here -->
-                <form>
-                    <div class="mb-3">
-                        <label for="city-search" class="form-label">Search for a city</label>
-                        <input type="text" class="form-control form-control-lg" id="city-search">
+                <div class="card pt-4 pb-5">
+                    <form>
+                        <div class="d-grid mb-3 gap-2 col-10 mx-auto">
+                            <label for="city-search" class="form-label">Search for a city</label>
+                            <input type="text" class="form-control form-control-lg" id="city-search">
+                        </div>
+                        <div class="d-grid gap-2 col-10 mx-auto">
+                            <button type="submit" id="city-search-btn" class="btn btn-success">Search</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-5 offset-md-3 align-self-start text-end" id="cities">
+                <button class="cached btn btn-outline-secondary btn-sm">Kansas City</button>
+                <button class="cached btn btn-outline-secondary btn-sm">New York</button>
+                <button class="cached btn btn-outline-secondary btn-sm">Seattle</button>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-4" id="current">
+                <div class="card text-bg-primary h-100">
+                    <div class="card-img-top text-center p-2">
+                        <i class="bi-sun" style="font-size: 5em; color: #f77802;"></i>
                     </div>
-                    <button type="submit" class="btn btn-primary">Search</button>
-                </form>
+                    <div class="card-header">
+                        <h5 class="card-title">Phoenix: Current</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Temp: 68.4 F</p>
+                        <p class="card-text">Wind Speed: 35 mph</p>
+                        <p class="card-text">Humidity: 34%</p>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-8" id="cities">
-
+            <div class="col-md-4" id="day-1">
+                <div class="card h-100">
+                    <div class="card-img-top text-center p-2">
+                        <i class="bi-sun" style="font-size: 5em; color: #f77802;"></i>
+                    </div>
+                    <div class="card-header">
+                        <h5 class="card-title">Phoenix: 11/07/2023</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Temp: 68.4 F</p>
+                        <p class="card-text">Wind Speed: 35 mph</p>
+                        <p class="card-text">Humidity: 34%</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" id="day-2">
+                <div class="card h-100">
+                    <div class="card-img-top text-center p-2">
+                        <i class="bi-clouds" style="font-size: 5em; color: cornflowerblue;"></i>
+                    </div>
+                    <div class="card-header">
+                        <h5 class="card-title">Phoenix: 11/08/2023</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Temp: 68.4 F</p>
+                        <p class="card-text">Wind Speed: 35 mph</p>
+                        <p class="card-text">Humidity: 34%</p>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-4" id="current"></div>
-            <div class="col-md-4"></div>
-            <div class="col-md-4"></div>
-        </div>
-        <div class="row">
-            <div class="col-md-4"></div>
-            <div class="col-md-4"></div>
-            <div class="col-md-4"></div>
+        <div class="row mb-3">
+            <div class="col-md-4" id="day-3">
+                <div class="card h-100">
+                    <div class="card-img-top text-center p-2">
+                        <i class="bi-sun" style="font-size: 5em; color: #f77802;"></i>
+                    </div>
+                    <div class="card-header">
+                        <h5 class="card-title">Phoenix: 11/09/2023</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Temp: 68.4 F</p>
+                        <p class="card-text">Wind Speed: 35 mph</p>
+                        <p class="card-text">Humidity: 34%</p>
+                    </div>
+                </div>
+            </div>
+                
+            <div class="col-md-4" id="day-4">
+                <div class="card h-100">
+                    <div class="card-img-top text-center p-2">
+                        <i class="bi-sun" style="font-size: 5em; color: #f77802;"></i>
+                    </div>
+                    <div class="card-header">
+                        <h5 class="card-title">Phoenix: 11/10/2023</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Temp: 68.4 F</p>
+                        <p class="card-text">Wind Speed: 35 mph</p>
+                        <p class="card-text">Humidity: 34%</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" id="day-5">
+                <div class="card h-100">
+                    <div class="card-img-top text-center p-2">
+                        <i class="bi-sun" style="font-size: 5em; color: #f77802;"></i>
+                    </div>
+                    <div class="card-header">
+                        <h5 class="card-title">Phoenix: 11/11/2023</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Temp: 68.4 F</p>
+                        <p class="card-text">Wind Speed: 35 mph</p>
+                        <p class="card-text">Humidity: 34%</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
     <script type="text/javascript" src="./script.js"></script>
