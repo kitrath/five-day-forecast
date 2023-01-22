@@ -1,0 +1,21 @@
+i {
+    font-size: 5em;
+}
+
+.bi-sun {
+    color: #f77802; 
+}
+
+.bi-cloud-sun {
+    color: #c6813f;
+}
+
+.bi-clouds,
+.bi-cloud-snow {
+    color: #c6c6c6;
+}
+
+.bi-cloud-rain-heavy {
+    color: #868686;
+}
+
