@@ -47,3 +47,14 @@ async function getWeatherDataForCity(cityName, type) {
         console.error(error.message);
     }
 };
+
+function createElem(tagName, ...classList) {
+    const el = document.createElement(tagName);
+    if (classList.length) {
+        document.setAttribute(
+            "class",
+            classList.join(" ")
+        );
+    }
+    return el;
+}
