@@ -246,6 +246,14 @@ citySearchButton.addEventListener('click', function(event) {
         })
 });
 
+const cityButtons = document.querySelector("#cities");
+
+cityButtons.addEventListener("click", function(event) {
+    const target = event.target;
+    const cityName = target.value;
+    loadWeatherDataFromCache(cityName);
+});
+
 /*************** localStorage cache management ***********************/
 
 function addCityToLocalStorage(city, data) {
@@ -273,8 +281,11 @@ function addFiveDayToLocalStorage(city, data) {
     localStorage.setItem(city, JSON.stringify(cachedForecast));
 }
 
-function loadWeatherDataFromCache(city) {
-    
+// Caller checks whether cache is expired
+function loadWeatherDataFromCache(cityName) {
+    const cityData = JSON.parse(localStorage.getItem(cityName));
+    attachCardToDOM(cityName, "#current", cityData.current, "current");
+    attachFiveDayToDOM(cityName, cityData.fiveday);
 }
 
 function isCachedForecastValid(timeStamp, numHoursToCache = 3) {
@@ -316,6 +327,9 @@ function addToCachedCitiesList(city) {
     let cities = getValidCitiesList();
     
     if (cities) {
+        // Exit if, for some reason, city is already in list.
+        if (cities.includes(city)) return;
+        
         cities.push(city);
     } else {
         // cities === undefined
@@ -353,7 +367,7 @@ function createCachedButton(cityName) {
         'button', 'cached', 'btn', 'btn-outline-secondary',
         'btn-sm', 'mx-1', 'my-2'
     );
-    button.setAttribute('data-city', cityName);
+    button.value = cityName;
     button.textContent = cityName;
     container.appendChild(button);
 }
@@ -379,8 +393,13 @@ function createElem(tagName, ...classList) {
 }
 
 function getDate(dateObj) {
-    // If no "," is present, entire locale string at index 0
-    return dateObj.toLocaleString().split(",")[0];
+    const formatted = dateObj.toLocaleString().split(",");
+    if (formatted.length === 2) {
+        return formatted[0];
+    } else {
+        const date = new Date(dateObj);
+        return date.toLocaleDateString();
+    }
 }
 
 function getIcon(mainWeather) {
