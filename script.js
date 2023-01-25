@@ -154,8 +154,12 @@ function attachCardToDOM(cityName, parentId, data, type="five") {
     // 3rd child of div.card
     const cardBodyElem = createElem('div', 'card-body');
 
-    // create 3 children of 3rd child
-    const bodyData = [data.temp, data.wind, data.humidity];
+    // Set up text for children of 3rd child
+    const temp = "Temp: " + data.temp + " F";
+    const wind = "Wind Speed: " + data.wind + " mph";
+    const humidity = "Humidity: " + data.humidity + "%";
+    // create children of 3rd child
+    const bodyData = [temp, wind, humidity];
     for (data of bodyData) {
         const p = createElem('p', 'card-text');
         p.textContent = data;
@@ -179,7 +183,7 @@ const citySearchInput = document.querySelector("#city-search");
 citySearchButton.addEventListener('click', function(event) {
     // Don't refresh page
     event.preventDefault();
-    console.log("prevent.default()")
+
     const city = citySearchInput.value.trim();
     
     // city is ''
