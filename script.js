@@ -277,3 +277,31 @@ function getDate(dateObj) {
     // If no "," is present, entire locale string at index 0
     return dateObj.toLocaleString().split(",")[0];
 }
+
+function getIcon(mainWeather) {
+    switch (mainWeather) {
+        case 'Thunderstorm':
+            return 'bi-cloud-lightning-rain';
+        case 'Drizzle':
+            return 'bi-cloud-drizzle';
+        case 'Rain':
+            return 'bi-cloud-rain';
+        case 'Snow':
+            return 'bi-cloud-snow';
+        case 'Clear':
+            return 'bi-sun';
+        case 'Clouds':
+            return 'bi-clouds';
+        default:
+            return 'bi-cloud-sun';
+    }
+}
+
+/*
+data: {
+    title:
+    temp:
+    windspeed:
+    humidity:
+}
+*/
