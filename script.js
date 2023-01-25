@@ -73,21 +73,37 @@ async function getFiveDayForecastJSON(coords) {
 }
 
 // Extract only one forecast per day from a 5-day list of 3-hour forecasts
-// Arbitrarily choose forecast for 12pm
+// Arbitrarily choose forecast for 9am UTC
 // data.list (argument dataList) is an array of 3-hour forecasts
 // returns a list of only five forecasts -- one per day at noon
 function getListOfFiveForecasts(dataList) {
     let resultList = [];
     for (forecast of dataList) {
         const forecastTime = new Date(forecast.dt_txt);
-        if (forecastTime.getHours() === 12) {
+        if (forecastTime.getHours() === 9) {
             // add a JS date object value to the forecast,
             // used later for sorting and display
-            forecast.dateObject = forecastTime;
-            resultList.push(forecast);
+            let data = {};
+            data.main = forecast.weather[0].main;
+            data.temp = forecast.main.temp;
+            data.wind = forecast.wind.speed;
+            data.humidity = forecast.main.humidity;
+            data.date = forecastTime;
+            resultList.push(data);
         }
     }
+    console.log("Inside getListOfFiveForecasts, resultList[] =", JSON.stringify(resultList));
     return resultList;
+}
+
+function getCurrentForecast(data) {
+    let result = {};
+    result.main = data.weather[0].main;
+    result.temp = data.main.temp;
+    result.wind = data.wind.speed;
+    result.humidity = data.main.humidity;
+    console.log("Inside get current forecast, result{} =", JSON.stringify(result));
+    return result;
 }
 
 const citySearchButton = document.querySelector("#city-search-btn");
@@ -119,9 +135,9 @@ citySearchButton.addEventListener('click', function(event) {
 
             console.log(data);
             // TODO: displayCurrentForecast();
-
+            const abbrData = getCurrentForecast(data);
             // cache in localStorage
-            addCityToLocalStorage(city, data);
+            addCityToLocalStorage(city, abbrData);
 
             return data.coord;
         })
