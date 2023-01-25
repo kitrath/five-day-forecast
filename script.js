@@ -245,7 +245,8 @@ function createCachedButton(cityName) {
 
     const container = document.querySelector('#cities');
     const button = createElem(
-        'button', 'cached', 'btn', 'btn-outline-secondary', 'btn-sm'
+        'button', 'cached', 'btn', 'btn-outline-secondary',
+        'btn-sm', 'mx-1'
     );
     button.setAttribute('data-city', cityName);
     button.textContent = cityName;
