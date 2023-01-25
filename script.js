@@ -79,7 +79,7 @@ async function getFiveDayForecastJSON(coords) {
 function getListOfFiveForecasts(dataList) {
     let resultList = [];
     for (forecast of dataList) {
-        const forecastTime = new Date(forecast.dt_txt);
+        let forecastTime = new Date(forecast.dt_txt);
         if (forecastTime.getHours() === 9) {
             // add a JS date object value to the forecast,
             // used later for sorting and display
@@ -106,13 +106,80 @@ function getCurrentForecast(data) {
     return result;
 }
 
+// returns undefined, modifies DOM
+// type is "five" or "current"
+// created card will be attached to elem#parentId
+function attachCardToDOM(cityName, parentId, data, type="five") {
+    // Make div.card
+    let cardClassList = ['card', 'h-100'];
+    if (type === "current") {
+        cardClassList.push("text-bg-primary");
+    }
+    const cardElem = createElem('div', ...cardClassList);
+
+    // 1st child of div.card
+    const cardImgElem = createElem(
+        'div', 
+        'card-img-top', 
+        'text-center', 
+         'p-2'
+    );
+
+    const iconClass = getIcon(data.main);
+    const iconElem = createElem('i', iconClass);
+    // append icon to 1st child
+    cardImgElem.appendChild(iconElem)
+    
+    // append 1st child to div.card
+    cardElem.appendChild(cardImgElem);
+    
+    // 2nd child of div.card 
+    const cardHeaderElem = createElem('div', 'card-header');
+    
+    let cardTitle = cityName + ": ";
+    if (type === "current") {
+        cardTitle += "Current";
+    } else {
+        cardTitle += getDate(data.date);
+    }
+    const titleElem = createElem('h5', 'card-title');
+    titleElem.textContent = cardTitle;
+
+    // append to 2nd child
+    cardHeaderElem.appendChild(titleElem);
+
+    // append 2nd child to div.card
+    cardElem.appendChild(cardHeaderElem);
+
+    // 3rd child of div.card
+    const cardBodyElem = createElem('div', 'card-body');
+
+    // create 3 children of 3rd child
+    const bodyData = [data.temp, data.wind, data.humidity];
+    for (data of bodyData) {
+        const p = createElem('p', 'card-text');
+        p.textContent = data;
+        // append children to 3rd child here in loop
+        cardBodyElem.appendChild(p);
+    }
+
+    // append 3rd child to div.card
+    cardElem.appendChild(cardBodyElem);
+
+    // get div#parentId
+    const parent = document.querySelector(parentId);
+    const currentCard = document.querySelector(parentId + " > div");
+    // insert div.card into DOM as child of parent
+    parent.replaceChild(cardElem, currentCard);
+}
+
 const citySearchButton = document.querySelector("#city-search-btn");
 const citySearchInput = document.querySelector("#city-search");
 
 citySearchButton.addEventListener('click', function(event) {
     // Don't refresh page
     event.preventDefault();
-
+    console.log("prevent.default()")
     const city = citySearchInput.value.trim();
     
     // city is ''
@@ -138,6 +205,8 @@ citySearchButton.addEventListener('click', function(event) {
             const abbrData = getCurrentForecast(data);
             // cache in localStorage
             addCityToLocalStorage(city, abbrData);
+            // build card and attach it to DOM
+            attachCardToDOM(city, "#current", abbrData, "current");
 
             return data.coord;
         })
