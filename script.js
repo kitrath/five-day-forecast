@@ -249,10 +249,15 @@ citySearchButton.addEventListener('click', function(event) {
 /*************** localStorage cache management ***********************/
 
 function addCityToLocalStorage(city, data) {
+    // Don't add duplicate items to book-keeping list &
+    // don't create duplicate buttons.
+    const isInStorageAlready = localStorage.getItem(city);
 
-    addToCachedCitiesList(city);
-    createCachedButton(city);
-
+    if (!isInStorageAlready) {
+        addToCachedCitiesList(city);
+        createCachedButton(city);
+    }
+    // Replace the data, though
     localStorage.setItem(
         city,
         JSON.stringify({
@@ -308,7 +313,8 @@ function getValidCitiesList() {
 // If list doesn't exist, create one, add item
 // and save to localStorage
 function addToCachedCitiesList(city) {
-    let cities = getValidCitiesList(); 
+    let cities = getValidCitiesList();
+    
     if (cities) {
         cities.push(city);
     } else {
@@ -318,7 +324,7 @@ function addToCachedCitiesList(city) {
     localStorage.setItem("cities", JSON.stringify(cities));
 }
 
-// (on page load) determines if cached forecasts are still
+// (on DOM load) determines if cached forecasts are still
 // valid and creates a button for the valid ones
 function pruneCachedForecasts(event) {
 
@@ -345,7 +351,7 @@ function createCachedButton(cityName) {
     const container = document.querySelector('#cities');
     const button = createElem(
         'button', 'cached', 'btn', 'btn-outline-secondary',
-        'btn-sm', 'mx-1'
+        'btn-sm', 'mx-1', 'my-2'
     );
     button.setAttribute('data-city', cityName);
     button.textContent = cityName;
