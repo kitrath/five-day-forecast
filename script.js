@@ -177,6 +177,15 @@ function attachCardToDOM(cityName, parentId, data, type="five") {
     parent.replaceChild(cardElem, currentCard);
 }
 
+// attach five-day forecast to the DOM
+function attachFiveDayToDOM(cityName, dataList) {
+    
+    for (let i = 0; i < dataList.length; i++) {
+        const parentId = "#day-" + (i + 1).toString();
+        attachCardToDOM(cityName, parentId, dataList[i]);
+    }
+}
+
 const citySearchButton = document.querySelector("#city-search-btn");
 const citySearchInput = document.querySelector("#city-search");
 
@@ -223,8 +232,9 @@ citySearchButton.addEventListener('click', function(event) {
         .then(function(fiveDayJSON) {
             // We pick one forecast (at noon) for each day
             const fiveDayAbbr = getListOfFiveForecasts(fiveDayJSON.list);
-            // TODO: displayFiveDayForecast()
 
+            // attach each member of fiveDayAbbr[] to the DOM
+            attachFiveDayToDOM(city, fiveDayAbbr);
             // add to localStorage cache
             addFiveDayToLocalStorage(city, fiveDayAbbr);
 
