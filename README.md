@@ -3,7 +3,7 @@
 ## Description
 *Five Day Forecast* displays weather forecast data for a city of the user's choice.  It stores previous searches in local storage so forecasts persist between closing the browser and refreshing the page.  Previous results can be accessed by clicking buttons that automaticall populate for each city after a user's search.  The app utilizes the [OpenWeatherMap API](https://openweathermap.org/api) for data, and the [Bootstrap](https://getbootstrap.com/) UI library for styles and structure.
 
-**Visit the application here**: [https://kitrath.github.io/five-day-forecast/](https://kitrath.github.io/five-daya-forecast)
+**Visit the application here**: [https://kitrath.github.io/five-day-forecast/](https://kitrath.github.io/five-day-forecast)
 
 ## Usage
 Input the name of a city and press the search button.  You will receive the current weather forecast in a card below the search area. You will also receive the forecast for each of the next five days.  Forecasts for cities you have searched are saved in your browser's local storage for three hours. Click on the button with the name of a city you have previously searched to see its weather forecast again.
