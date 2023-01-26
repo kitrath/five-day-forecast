@@ -1,11 +1,18 @@
-const API_KEY = "0129f7bf1c80c0da1d1b4fdbf6fdbced";
+// Avoid clobbering global scope with IIFE
+(function(window, document) {
+// But don't indent...
+
+const localStorage = window.localStorage;
+const JSON         = window.JSON;
+
+const API_KEY  = "0129f7bf1c80c0da1d1b4fdbf6fdbced";
 const BASE_URL = "https://api.openweathermap.org/";
 
-// Return tempratures in Fahrenhiet
-const CURRENT_WEATHER = "data/2.5/weather";
+// openweathermap api paths
+const CURRENT_WEATHER   = "data/2.5/weather";
 const FIVE_DAY_FORECAST = "data/2.5/forecast";
 
-// type: 'current' | 'five'
+// param type: "current" or "five"
 function completeURL(partialQueryString, type, appId=API_KEY) {
     const path = (type === 'current') ? CURRENT_WEATHER : FIVE_DAY_FORECAST;
     let queryString = partialQueryString;
@@ -46,6 +53,9 @@ async function getOpenWeatherData(type, data) {
             // rejects, our function can throw 
             return await response.json();
         } else {
+            // TODO: Replace with bootstrap modal
+            alert(response.status + ": " + response.statusText);
+
             throw new Error(`Unexpected status code: ${
                 response.status
             } ${response.statusText}`);
@@ -59,7 +69,6 @@ async function getCurrentWeatherJSON(cityName) {
     try {
         return await getOpenWeatherData('current', cityName);
     } catch (error) {
-        // handleCityNotFounc(cityName);
         console.error(error.message);
     }
 }
@@ -92,7 +101,7 @@ function getListOfFiveForecasts(dataList) {
             resultList.push(data);
         }
     }
-    console.log("Inside getListOfFiveForecasts, resultList[] =", JSON.stringify(resultList));
+
     return resultList;
 }
 
@@ -102,12 +111,12 @@ function getCurrentForecast(data) {
     result.temp = data.main.temp;
     result.wind = data.wind.speed;
     result.humidity = data.main.humidity;
-    console.log("Inside get current forecast, result{} =", JSON.stringify(result));
+
     return result;
 }
 
-// returns undefined, modifies DOM
-// type is "five" or "current"
+// return undefined, modifies DOM
+// param type: "five" or "current"
 // created card will be attached to elem#parentId
 function attachCardToDOM(cityName, parentId, data, type="five") {
     // Make div.card
@@ -173,11 +182,15 @@ function attachCardToDOM(cityName, parentId, data, type="five") {
     // get div#parentId
     const parent = document.querySelector(parentId);
     const currentCard = document.querySelector(parentId + " > div");
-    // insert div.card into DOM as child of parent
-    parent.replaceChild(cardElem, currentCard);
+    
+    if (currentCard) {
+        parent.replaceChild(cardElem, currentCard);
+    } else {
+        parent.appendChild(cardElem);
+    }
 }
 
-// attach five-day forecast to the DOM
+// build and attach a card for each day of the five-day forecast
 function attachFiveDayToDOM(cityName, dataList) {
     
     for (let i = 0; i < dataList.length; i++) {
@@ -187,7 +200,7 @@ function attachFiveDayToDOM(cityName, dataList) {
 }
 
 const citySearchButton = document.querySelector("#city-search-btn");
-const citySearchInput = document.querySelector("#city-search");
+const citySearchInput  = document.querySelector("#city-search");
 
 citySearchButton.addEventListener('click', function(event) {
     // Don't refresh page
@@ -197,6 +210,8 @@ citySearchButton.addEventListener('click', function(event) {
     
     // city is ''
     if (!city) {
+        // TODO: Replace with a bootstrap modal
+        alert("You must enter a value for city.");
         return;
     }
 
@@ -213,8 +228,6 @@ citySearchButton.addEventListener('click', function(event) {
 
         .then(function (data) {
 
-            console.log(data);
-            // TODO: displayCurrentForecast();
             const abbrData = getCurrentForecast(data);
             // cache in localStorage
             addCityToLocalStorage(city, abbrData);
@@ -227,10 +240,9 @@ citySearchButton.addEventListener('click', function(event) {
         .then(function(coords) {
             return getFiveDayForecastJSON(coords);
         })
-        
-        // fiveDayJSON is large list of 5 days worth of 3-hour forecasts 
+        // fiveDayJSON is large list of 5 days of forecasts every 3 hours 
         .then(function(fiveDayJSON) {
-            // We pick one forecast (at noon) for each day
+            // We pick one forecast (at 9) for each day
             const fiveDayAbbr = getListOfFiveForecasts(fiveDayJSON.list);
 
             // attach each member of fiveDayAbbr[] to the DOM
@@ -238,9 +250,8 @@ citySearchButton.addEventListener('click', function(event) {
             // add to localStorage cache
             addFiveDayToLocalStorage(city, fiveDayAbbr);
 
-            console.log(fiveDayAbbr);
+            
         })
-
         .catch(function(error) {
             console.error(error.message);
         })
@@ -358,6 +369,7 @@ function pruneCachedForecasts(event) {
     }
 }
 
+// Invalidate old cache entries on DOMloaded
 document.addEventListener('DOMContentLoaded', pruneCachedForecasts); 
 
 function createCachedButton(cityName) {
@@ -365,9 +377,10 @@ function createCachedButton(cityName) {
     const container = document.querySelector('#cities');
     const button = createElem(
         'button', 'cached', 'btn', 'btn-outline-secondary',
-        'btn-sm', 'mx-1', 'my-2'
+        'btn-sm', 'm-1'
     );
     button.value = cityName;
+    button.setAttribute('data-city', cityName);
     button.textContent = cityName;
     container.appendChild(button);
 }
@@ -376,6 +389,7 @@ function removeCachedButton(cityName) {
     const container = document.querySelector('#cities');
     const selector = `[data-city="${cityName}"]`;
     const button = document.querySelector(selector);
+    // There might not be any buttons yet
     if (button) {
         container.removeChild(button);
     }
@@ -421,11 +435,5 @@ function getIcon(mainWeather) {
     }
 }
 
-/*
-data: {
-    title:
-    temp:
-    windspeed:
-    humidity:
-}
-*/
+// END IIFE
+})(window, document);
