@@ -6,7 +6,7 @@
 **Visit the application here**: [https://kitrath.github.io/five-day-forecast/](https://kitrath.github.io/five-day-forecast/)
 
 ## Usage
-Input the name of a city and press the search button.  You will receive the current weather forecast in a card below the search area. You will also receive the forecast for each of the next five days.  Forecasts for cities you have searched are saved in your browser's local storage for three hours. Click on the button with the name of a city you have previously searched to see its weather forecast again.
+Input the name of a city and press the search button.  You will receive the current weather forecast in a card below the search area. You will also receive the forecast for each of the next five days.  Forecasts for cities you have searched are saved in your browser's local storage. Click on the button with the name of a city you have previously searched to see its weather forecast again.
 
 ## Screenshot
 <p align="center"><img src="./screen.png" width="400px" /></p>
