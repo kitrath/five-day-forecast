@@ -1,7 +1,7 @@
 # Five Day Forecast
 
 ## Description
-*Five Day Forecast* displays weather forecast data for a city of the user's choice.  It stores previous searches in local storage so forecasts persist between closing the browser and refreshing the page.  Previous results can be accessed by clicking buttons that automaticall populate for each city after a user's search.  The app utilizes the [OpenWeatherMap API](https://openweathermap.org/api) for data, and the [Bootstrap](https://getbootstrap.com/) UI library for styles and structure.
+*Five Day Forecast* displays weather forecast data for a city of the user's choice.  It stores previous searches in local storage so forecasts persist between closing the browser and refreshing the page.  Previous results can be accessed by clicking buttons that automatically populate for each city after a user's search.  The app utilizes the [OpenWeatherMap API](https://openweathermap.org/api) for data, and the [Bootstrap](https://getbootstrap.com/) UI library for styles and structure.
 
 **Visit the application here**: [https://kitrath.github.io/five-day-forecast/](https://kitrath.github.io/five-day-forecast/)
 
