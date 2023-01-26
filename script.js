@@ -263,6 +263,10 @@ cityButtons.addEventListener("click", function(event) {
     const target = event.target;
     const cityName = target.value;
     loadWeatherDataFromCache(cityName);
+    // TODO: If cache is expired, load data for the chosen button from 
+    // a new fetch request to API and then update the displayed
+    // Cache buttons (by checking timestamp values) to reflect the new status of
+    // each query value object stored in localStorage.
 });
 
 /*************** localStorage cache management ***********************/
@@ -280,6 +284,10 @@ function addCityToLocalStorage(city, data) {
     localStorage.setItem(
         city,
         JSON.stringify({
+            // Add name 1/26/2023
+            // Use it instead of cities array for cache book-keeping and button update
+            // Reason: no programmatic access to localStorage key names
+            name: city,
             timestamp: Date.now(),
             current: data
         })
