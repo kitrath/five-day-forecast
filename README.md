@@ -1,19 +1,18 @@
 # Five Day Forecast
 
-## User Story
+## Description
+*Five Day Forecast* displays weather forecast data for a city of the user's choice.  It stores previous searches in local storage so forecasts persist between closing the browser and refreshing the page.  Previous results can be accessed by clicking buttons that automaticall populate for each city after a user's search.  The app utilizes the [OpenWeatherMap API](https://openweathermap.org/api) for data, and the [Bootstrap](https://getbootstrap.com/) UI library for styles and structure.
 
-**AS A** traveler<br>
-**I WANT** to see the weather outlook for multiple cities<br>
-**SO THAT** I can plan a trip accordingly.
+**Visit the application here**: [https://kitrath.github.io/five-day-forecast/](https://kitrath.github.io/five-daya-forecast)
 
-## Acceptance Criteria
+## Usage
+Input the name of a city and press the search button.  You will receive the current weather forecast in a card below the search area. You will also receive the forecast for each of the next five days.  Forecasts for cities you have searched are saved in your browser's local storage for three hours. Click on the button with the name of a city you have previously searched to see its weather forecast again.
 
-**GIVEN** a weather dashboard with form inputs
-- **WHEN** I search for a city<br>
-**THEN** I am presented with current and future conditions for that city and that city is added to the search history
-- **WHEN** I view current weather conditions for that city<br>
-**THEN** I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, and the wind speed
-- **WHEN** I view future weather conditions for that city<br>
-**THEN** I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, the wind speed, and the humidity.
-- **WHEN** I click on a city in the search history<br>
-**THEN** I am again presented with current and future conditions for that city
+## Screenshot
+<p align="center"><img src="./screen.png" width="400px" /></p>
+
+## Roadmap
+- Notify the user of application errors with a Bootstrap modal component rather the a native browser alert.
+- Develop application logic so that users can see midday forecasts by default for any city they choose, no matter the timezone.
+- Apply navigation on each five day forecast card so that users can click back and forward through that day's forecasts at three hour intervals.
+- Test and futher develop the caching logic for keeping forecasts in the browser's local storage.
